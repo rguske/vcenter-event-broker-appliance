@@ -33,6 +33,21 @@
         <Property ovf:key="guestinfo.ntp" ovf:type="string" ovf:userConfigurable="true">
             <Label>NTP</Label>
             <Description>NTP Servers (space separated)</Description>
+        <Property ovf:key="guestinfo.enableproxy" ovf:type="string" ovf:userConfigurable="true">
+            <Label>Enable Proxy</Label>
+            <Description>Type yes or no</Description>
+        </Property>
+        <Property ovf:key="guestinfo.httpproxy" ovf:type="string" ovf:userConfigurable="true">
+            <Label>HTTP Proxy</Label>
+            <Description>Enter the address of your HTTP Proxy</Description>
+        </Property>
+        <Property ovf:key="guestinfo.httpsproxy" ovf:type="string" ovf:userConfigurable="true">
+            <Label>HTTPS Proxy</Label>
+            <Description>Enter the address of your HTTPS Proxy</Description>
+        </Property>
+        <Property ovf:key="guestinfo.noproxy" ovf:type="string" ovf:userConfigurable="true">
+            <Label>No Proxy</Label>
+            <Description>No Proxy for e.g. your internal domain suffix. Comma seperated (localhost, 127.0.0.1, domain.local)</Description>
         </Property>
         <Category>Credentials</Category>
         <Property ovf:key="guestinfo.root_password" ovf:password="true" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
