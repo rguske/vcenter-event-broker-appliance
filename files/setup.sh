@@ -31,10 +31,11 @@ else
     DNS_SERVER_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.dns")
     DNS_DOMAIN_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.domain")
     NTP_SERVER_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.ntp")
-    PROXY_ENABLED_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.enableproxy")
-    HTTP_PROXY_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.httpproxy")
-    HTTPS_PROXY_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.httpsproxy")
-    NO_PROXY_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.noproxy")
+    HTTP_PROXY_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.http_proxy")
+    HTTPS_PROXY_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.https_proxy")
+    PROXY_USERNAME_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.proxy_username")
+    PROXY_PASSWORD_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.proxy_password")
+    NO_PROXY_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.no_proxy")
     ROOT_PASSWORD_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.root_password")
     OPENFAAS_PASSWORD_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.openfaas_password")
     VCENTER_SERVER_PROPERTY=$(vmtoolsd --cmd "info-get guestinfo.ovfEnv" | grep "guestinfo.vcenter_server")
@@ -119,39 +120,6 @@ Gateway=${GATEWAY}
 DNS=${DNS_SERVER}
 Domain=${DNS_DOMAIN}
 
-__CUSTOMIZE_PHOTON__
-    #########################
-    ### Proxy Settings ###
-    #########################
-    PROXY_ENABLED=$(echo "${PROXY_ENABLED_PROPERTY}" | awk -F 'oe:value="' '{print $2}' | awk -F '"' '{print $1}')
-    HTTP_PROXY=$(echo "${HTTP_PROXY_PROPERTY}" | awk -F 'oe:value="' '{print $2}' | awk -F '"' '{print $1}')
-    HTTPS_PROXY=$(echo "${HTTPS_PROXY_PROPERTY}" | awk -F 'oe:value="' '{print $2}' | awk -F '"' '{print $1}')
-    NO_PROXY=$(echo "${NO_PROXY_PROPERTY}" | awk -F 'oe:value="' '{print $2}' | awk -F '"' '{print $1}')
-
-    echo -e "\e[92mConfiguring Proxy ..." > /dev/console
-    cat > /etc/sysconfig/proxy << __CUSTOMIZE_PHOTON__
-
-[Match]
-Name=e*
-
-[Proxy]
-# Enable a generation of the proxy settings to the profile.
-PROXY_ENABLED=${PROXY_ENABLED}
-# Some programs (e.g. wget) support proxies, if set in the environment.
-# Example: HTTP_PROXY="http://proxy.provider.de:3128/"
-HTTP_PROXY=${HTTP_PROXY}
-HTTPS_PROXY=${HTTPS_PROXY}
-# Example: NO_PROXY="www.me.de, do.main, localhost"
-NO_PROXY=${NO_PROXY}
-
-# Example: FTP_PROXY="http://proxy.provider.de:3128/"
-# FTP_PROXY=""
-# Example: GOPHER_PROXY="http://proxy.provider.de:3128/"
-# GOPHER_PROXY=""
-# Example: SOCKS_PROXY="socks://proxy.example.com:8080"
-# SOCKS_PROXY=""
-# Example: SOCKS5_SERVER="office-proxy.example.com:8881"
-# SOCKS5_SERVER=""
 __CUSTOMIZE_PHOTON__
     #########################
     ### NTP Settings      ###
