@@ -70,7 +70,7 @@ jobs:
 
     steps:
       - name: Setup ko
-        uses: imjasonh/setup-ko@2c3450ca27f6e6f2b02e72a40f2163c281a1f675 # v0.4
+        uses: imjasonh/setup-ko@ace48d793556083a76f1e3e6068850c1f4a369aa # v0.4
 
       - name: Set up Go ${{ matrix.go-version }}
         uses: actions/setup-go@b22fbbc2921299758641fab08929b4ac52b32923
